@@ -1,0 +1,21 @@
+{
+  "name": "news-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ameerkanaaneh/news-explorer-api.git"
+  },
+  "author": "Ameer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ameerkanaaneh/news-explorer-api/issues"
+  },
+  "homepage": "https://github.com/ameerkanaaneh/news-explorer-api#readme"
+}
