@@ -7,7 +7,12 @@ const helmet = require("helmet");
 const { celebrate, Joi, errors } = require("celebrate");
 
 const { PORT = 3000 } = process.env;
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://api.ameer-news.students.nomoredomainssbs.ru",
+  "https://ameer-news.students.nomoredomainssbs.ru",
+  "https://www.ameer-news.students.nomoredomainssbs.ru",
+];
 
 const usersRouter = require(path.join(__dirname, "/routes/users.js"));
 const articlesRouter = require(path.join(__dirname, "/routes/articles.js"));
