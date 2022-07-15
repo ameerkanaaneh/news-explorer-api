@@ -36,12 +36,16 @@ module.exports.deleteArticle = (req, res, next) => {
   const articleId = req.params.articleId;
   Article.findByIdAndRemove(articleId)
     .then((article) => {
-      if (!article) {
-        throw new NotFoundError("article not found");
-      } else {
+      if (article && article.owner.toString() === req.user._id.toString()) {
         Article.deleteOne(article).then((deletedArticle) => {
-          res.send({ data: deletedArticle });
+          res.status(200).send({ data: deletedArticle });
         });
+      } else if (!article) {
+        throw new NotFoundError("Article not found");
+      } else {
+        throw new AuthError(
+          "You should be the owner of the article in order to delete it"
+        );
       }
     })
     .catch(next);
