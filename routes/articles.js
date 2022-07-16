@@ -1,22 +1,22 @@
-const router = require("express").Router();
-const { celebrate, Joi } = require("celebrate");
-const validator = require("validator");
+const router = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
 const {
   getArticles,
   addArticle,
   deleteArticle,
-} = require("../controllers/articles");
+} = require('../controllers/articles');
 
 const validateURL = (value, helpers) => {
   if (validator.isURL(value)) {
     return value;
   }
-  return helpers.error("string.uri");
+  return helpers.error('string.uri');
 };
 
-router.get("/", getArticles);
+router.get('/', getArticles);
 router.post(
-  "/",
+  '/',
   celebrate({
     body: Joi.object().keys({
       keyword: Joi.string().required(),
@@ -28,16 +28,16 @@ router.post(
       image: Joi.string().required().custom(validateURL),
     }),
   }),
-  addArticle
+  addArticle,
 );
 router.delete(
-  "/:articleId",
+  '/:articleId',
   celebrate({
     params: Joi.object().keys({
       articleId: Joi.string().length(24).hex().required(),
     }),
   }),
-  deleteArticle
+  deleteArticle,
 );
 
 module.exports = router;

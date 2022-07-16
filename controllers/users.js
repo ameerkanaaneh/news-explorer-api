@@ -1,10 +1,11 @@
-const User = require("../models/user");
 // for hashing passwords we use the bcrypt module
 const bcrypt = require("bcryptjs");
-const AuthError = require("../errors/AuthError");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const User = require("../models/user");
+const AuthError = require("../errors/AuthError");
 const NotFoundError = require("../errors/NotFoundError");
+const ConflictError = require("../errors/ConflictError");
 
 dotenv.config();
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -29,7 +30,19 @@ module.exports.addUser = (req, res, next) => {
       if (!user) {
         throw new AuthError("Cannot create the user please try again");
       }
-      res.send({ data: user });
+      res.send({
+        data: {
+          email: user.email,
+          name: user.name,
+          _id: user._id,
+          __v: user.__v,
+        },
+      });
+    })
+    .catch((err) => {
+      if (err.name === "MongoServerError") {
+        throw new ConflictError("This email is already in use");
+      }
     })
     .catch(next);
 };
